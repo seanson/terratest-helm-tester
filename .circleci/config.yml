@@ -1,0 +1,11 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: seanson/terratest-helm-tester:latest
+    steps:
+      - checkout
+      - run: |
+        docker create -v /app/test --name terratest alpine:3.4 /bin/true
+        docker cp charts terratest:/app/test
+        docker run --volumes-from charts seanson/terratest-helm-tester:latest go test -v ./test/...
