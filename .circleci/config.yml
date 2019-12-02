@@ -1,6 +1,10 @@
 version: 2.1
+workflows:
+  main:
+    jobs:
+      - build
 jobs:
-  test:
+  build:
     machine:
       image: ubuntu-1604:201903-01
     steps:
