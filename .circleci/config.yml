@@ -10,6 +10,6 @@ jobs:
     steps:
       - checkout
       - run: |
-          docker create -v /app/test --name terratest alpine:3.4 /bin/true
-          docker cp charts terratest:/app/test
-          docker run --volumes-from charts seanson/terratest-helm-tester:latest go test -v ./test/...
+          docker create -v /app/test2 --name terratest alpine:3.4 /bin/true
+          docker cp test terratest:/app/test2
+          docker run --volumes-from terratest seanson/terratest-helm-tester:latest go test -v ./test2/...

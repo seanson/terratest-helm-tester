@@ -2,6 +2,7 @@
 
 [![Docker Build](https://img.shields.io/docker/cloud/automated/seanson/terratest-helm-tester?style=for-the-badge)](https://hub.docker.com/r/seanson/terratest-helm-tester)
 [![Docker Build](https://img.shields.io/docker/cloud/build/seanson/terratest-helm-tester?style=for-the-badge)](https://hub.docker.com/r/seanson/terratest-helm-tester)
+[![CircleCI Build](https://img.shields.io/circleci/build/github/seanson/terratest-helm-tester/master?style=for-the-badge)](https://circleci.com/gh/seanson/terratest-helm-tester)
 
 A prebuilt Docker container for running Helm chart spec tests.
 
