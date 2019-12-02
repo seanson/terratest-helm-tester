@@ -1,5 +1,7 @@
 # terratest-helm-tester
 
+<img src="https://img.shields.io/docker/build/seanson/terratest-helm-tester?style=for-the-badge" />
+
 A prebuilt Docker container for running Helm chart spec tests.
 
 ## Usage
