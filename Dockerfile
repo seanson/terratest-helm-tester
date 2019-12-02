@@ -2,6 +2,7 @@ FROM golang:1.13-alpine
 
 ENV HELM_LATEST_VERSION="v2.16.1"
 ENV CGO_ENABLED=0
+ENV GO111MODULE=on
 
 RUN apk add --update ca-certificates \
     && apk add --update -t deps wget git openssl bash \
@@ -12,9 +13,13 @@ RUN apk add --update ca-certificates \
     && rm /var/cache/apk/* \
     && rm -f /helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz
 
-WORKDIR /go/src/github.com/seanson/terratest-helm-tester
-COPY . /go/src/github.com/seanson/terratest-helm-tester/
+WORKDIR /app/
+COPY . /app
 
 RUN go test -i -tags=helm ./test
 
-CMD "/bin/sh" "-c" "go test -v ./test"
+VOLUME /app/test
+
+# TODO: Sort out a sane default for executing this
+
+# CMD "/bin/sh" "-c" "go test -v -count=1 ./test/..."
