@@ -9,6 +9,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	appsv1 "k8s.io/api/apps/v1"
+	certmanagerv1alpha2 "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha2"
 
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
@@ -61,4 +62,26 @@ func TestHelmBasicExampleTemplateRenderedDeployment(t *testing.T) {
 	deploymentContainers := deployment.Spec.Template.Spec.Containers
 	require.Equal(t, len(deploymentContainers), 1)
 	require.Equal(t, deploymentContainers[0].Image, expectedContainerImage)
+}
+
+func TestApplicationCertConfig(t *testing.T) {
+	t.Parallel()
+	helmChartPath, err := filepath.Abs("../")
+	releaseName := "argo-cd"
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		SetValues: map[string]string{
+			"certificate.issuer.kind": "certKind",
+			"certificate.issuer.name": "certName",
+		},
+		KubectlOptions: k8s.NewKubectlOptions("", "", "default"),
+	}
+	output := helm.RenderTemplate(t, options, helmChartPath, releaseName, []string{"templates/argocd-server/certificate.yaml"})
+	var certificate v1alpha2.Certificate
+	helm.UnmarshalK8SYaml(t, output, &certificate)
+
+	require.Equal(t, certificate.Spec.IssuerRef.Kind, "certKind")
+	require.Equal(t, certificate.Spec.IssuerRef.Name, "certName")
+	// require.Equal(t, deploymentContainers[0].Image, expectedContainerImage)
 }
