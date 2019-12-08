@@ -3,10 +3,10 @@ kind: Certificate
 metadata:
   name: cert-test
 spec:
-  commonName: { { .Values.certificate.domain | quote } }
+  commonName: {{ .Values.certificate.domain | quote }}
   dnsNames:
-    - { { .Values.certificate.domain | quote } }
+    - {{ .Values.certificate.domain | quote }}
   issuerRef:
-    kind: { { .Values.certificate.issuer.kind | quote } }
-    name: { { .Values.certificate.issuer.name | quote } }
+    kind: {{ .Values.certificate.issuer.kind | quote }}
+    name: {{ .Values.certificate.issuer.name | quote }}
   secretName: argocd-secret
