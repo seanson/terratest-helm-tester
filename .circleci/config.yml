@@ -14,7 +14,8 @@ jobs:
           docker create -v /app/test2 --name test_source alpine:3.4 /bin/true
           docker cp test test_source:/app/test2
           docker run --name terratest --volumes-from test_source terratest-helm-tester:local ./test2/...
-          mkdir -p ./test_results
-          docker cp terratest:/app/out ./test_results/junit
+          docker cp terratest:/app/out ./test_results
+      - store_artifacts:
+          path: ./test_results
       - store_test_results:
           path: ./test_results
