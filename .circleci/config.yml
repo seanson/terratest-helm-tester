@@ -12,7 +12,7 @@ jobs:
       - run: |
           docker build . -t terratest-helm-tester:local
           docker create -v /app/test2 --name test_source alpine:3.4 /bin/true
-          docker cp test terratest:/app/test2
+          docker cp test test_source:/app/test2
           docker run --name terratest --volumes-from test_source terratest-helm-tester:local ./test2/...
           docker cp terratest:/app/out ./test_results
       - store_test_results:
