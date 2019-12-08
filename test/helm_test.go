@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	_ "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+        _ "github.com/smartystreets/goconvey/convey"
 	certmanagerv1alpha2 "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha2"
 	"github.com/stretchr/testify/require"
 	appsv1 "k8s.io/api/apps/v1"
@@ -67,7 +68,7 @@ func TestHelmBasicExampleTemplateRenderedDeployment(t *testing.T) {
 
 func TestApplicationCertConfig(t *testing.T) {
 	t.Parallel()
-	helmChartPath, err := filepath.Abs("../")
+	helmChartPath, err := filepath.Abs("testdata/sample")
 	releaseName := "argo-cd"
 	require.NoError(t, err)
 
@@ -78,7 +79,7 @@ func TestApplicationCertConfig(t *testing.T) {
 		},
 		KubectlOptions: k8s.NewKubectlOptions("", "", "default"),
 	}
-	output := helm.RenderTemplate(t, options, helmChartPath, releaseName, []string{"templates/argocd-server/certificate.yaml"})
+	output := helm.RenderTemplate(t, options, helmChartPath, releaseName, []string{"templates/certificate.yaml"})
 	var certificate certmanagerv1alpha2.Certificate
 	helm.UnmarshalK8SYaml(t, output, &certificate)
 

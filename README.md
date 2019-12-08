@@ -10,10 +10,21 @@ A prebuilt Docker container for running Helm chart spec tests.
 
 Create a directory in your project folder for your tests and write a test as per the [example helm test](./test/helm_test.go).
 
-`docker run -v ${PWD}/tests: -v ${PWD}:/app/test seanson/terratest-helm-tester go test -v ./test/test/helm_test.go`
+`docker run -v ${PWD}/tests: -v ${PWD}:/app/test seanson/terratest-helm-tester`
+
+This will run the tests found in the `./tests/...` path with the Terratest log wrapper and generate text and XML results.
+
+## CI Support
+
+### CircleCI
+
+CircleCI does not let you copy images in and out of your container in Docker mode so machine mode is required.
+
+See [.cicleci/config.yml](.circleci/config.yml) for details on running CI and copying tests out afterwards.
 
 ## TODO
 
 - [x] Sort out better mounting path for tests
+- [x] Add wrapper and log parser for generating test outputs
+- [x] Show real CI usage
 - [ ] Document testing tags
-- [ ] Show real CI usage
