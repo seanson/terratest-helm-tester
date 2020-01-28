@@ -22,6 +22,13 @@ CircleCI does not let you copy images in and out of your container in Docker mod
 
 See [.cicleci/config.yml](.circleci/config.yml) for details on running CI and copying tests out afterwards.
 
+### Running as a non-root
+
+In some CI systems the build is run by a non-root user. The environment variable `USER_ID` can be passed to the container and it will change ownership of the result files.
+
+`docker run -e USER_ID="$(id -u)" -v ${PWD}/tests: -v ${PWD}:/app/test seanson/terratest-helm-tester`
+
+
 ## TODO
 
 - [x] Sort out better mounting path for tests
