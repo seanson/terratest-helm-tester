@@ -8,7 +8,8 @@ import (
 	"testing"
 
 	_ "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
-        _ "github.com/smartystreets/goconvey/convey"
+	_ "github.com/smartystreets/goconvey/convey"
+	_ "k8s.io/api/batch/v1beta1"
 	certmanagerv1alpha2 "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha2"
 	"github.com/stretchr/testify/require"
 	appsv1 "k8s.io/api/apps/v1"
